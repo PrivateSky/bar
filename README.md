@@ -79,7 +79,7 @@ arh.store()
 ```
 
 
-# Use bar as comamnd line
+# Use bar as command line
 bar command line have the options cfxtz very similar with tar commands in the unix systems
   -c is for create
   -f is to specify a name of the archive
