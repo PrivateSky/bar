@@ -37,9 +37,12 @@ arh.list(callback)
 
 ```
 
-A storage provider can be on of these 
+A storage provider can be on of these:
+
  FolderBrickStorageProvider : stores bricks in separate files in a folder
+ 
  SingleFileStorageProvider  : stores bricks in a single file
+ 
  EDFSStorageProvider: privateSky's EDFS bricks storage provider
 
 # Use bar as a node module to create or update
