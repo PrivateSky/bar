@@ -8,7 +8,7 @@ Compared with tar or zip files, the bar achive is designed to
 
 This module provides both a reusable library, zero dependencies and a command line for archiving, compression and encryption of files and folders.
 
-# Use bar main citisens: archives and storageProviders
+# Use bar main citizens: archives and storageProviders
 
 The main type of objects that can be created is a bar archive, using the newArchive or loadArchive functions exported by the module. In implementation newArchive and loadArchive are synonims, as when trying to load an archive that does not exist, it will create it.
 
