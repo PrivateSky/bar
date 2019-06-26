@@ -3,8 +3,8 @@
 
 Compared with tar or zip files, the bar achive is designed to 
 ```
-  - extend the idea of a localy stored file (still posibile) with the idea that a file is stored as bricks 
-  on a network storage of bricks (could be our own storage, IPFS, etc)
+  - extend the idea of a localy stored file (still posibile) with the idea that a file is stored as 
+  bricks on a network storage of bricks (could be our own storage, IPFS, etc)
   - allow easy access of a file (both for reading and wrinting) without loading in memory (or from the 
   network) the entire archivbe
   - allow compression and encryption per file
