@@ -14,20 +14,14 @@ function Brick(){
         hasher.update(content);
         hash = hasher.digest('hex');
     }
-    // this.save = function(filePath){
-    //     fs.writeFile((hash + '.brk'),(filePath + '/' + content),function(err){
-    //         if(err)
-    //             throw err;
-    //     })
+    // this.save = function(fileName,filePath){
+    //     fs.writeFileSync(fileName,(filePath + '/' + content));
     // }
     this.getContent = function(){
         return content;
     }
     this.getHash = function(){
         return hash;
-    }
-    this.getText = function(){
-        return 'Text';
     }
 }
 module.exports.Brick = Brick;
