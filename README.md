@@ -39,6 +39,11 @@ arh.store(callback)
 //list all the files in the bar
 arh.list(callback)
 
+//
+loadSync(callback)
+readFileSync() : string
+writeFileSync(string|buffer)
+
 ```
 
 A storage provider can be on of these:
@@ -46,6 +51,8 @@ A storage provider can be on of these:
  FolderBrickStorageProvider : stores bricks in separate files in a folder
  
  SingleFileStorageProvider  : stores bricks in a single file
+ 
+ CacheEDFSStorageProvider: privateSky's EDFS bricks storage provider plus local cache
  
  EDFSStorageProvider: privateSky's EDFS bricks storage provider
 
