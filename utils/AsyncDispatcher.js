@@ -29,11 +29,11 @@ function AsyncDispatcher(finalCallback) {
 	}
 
 	function callCallback() {
-	    if(errors.length === 0) {
+	    if(errors && errors.length === 0) {
 	        errors = undefined;
         }
 
-	    if(results.length === 0) {
+	    if(results && results.length === 0) {
 	        results = undefined;
         }
 
