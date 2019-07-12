@@ -1,59 +1,60 @@
 const assert = require("double-check").assert;
 const path = require("path");
-const BarWorker = require("../lib/BarWorker");
-const barWorker = new BarWorker();
-
-
+const utils = require("./utils/utils");
 const Archive = require("../lib/Archive");
-const FolderBrickStorage = require("../lib/FolderBrickStorage");
 
 const folderPath = path.resolve("fld");
+
+const folders = ["fld/fld2", "dot"];
+const files = [
+    "fld/a.txt", "fld/fld2/b.txt"
+];
+
+const text = ["asta e un text", "asta e un alt text"];
 let savePath = "dot";
 
-const archive = new Archive("testArchive", new FolderBrickStorage(savePath), barWorker);
+const createFolderBrickStorage = require("../lib/FolderBrickStorage").createFolderBrickStorage;
+const createFsAdapter = require("../lib/FsBarWorker").createFsBarWorker;
+const ArchiveConfigurator = require("../lib/ArchiveConfigurator");
 
-assert.callback("archiveFolderTest", (callback) => {
-    archive.addFolder(folderPath, (err) => {
-        if (err) {
-            throw err;
-        }
+ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", createFolderBrickStorage, folderPath);
+ArchiveConfigurator.prototype.registerDiskAdapter("fsAdapter", createFsAdapter);
 
-        let a = archive.getReadStream('any.txt');
-        archive.appendToFile(path.join(folderPath,'a.txt'),a,(err)=>{
-            console.log('done');
-            if(err)
-                console.log('Something happened!');
-                    archive.store((err, mapDigest) => {
+
+const archiveConfigurator = new ArchiveConfigurator();
+archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
+archiveConfigurator.setDiskAdapter("fsAdapter");
+archiveConfigurator.setBufferSize(256);
+
+
+
+const archive = new Archive(archiveConfigurator);
+
+assert.callback("ArchiveFolderTest", (callback) => {
+    utils.ensureFilesExist(folders, files, text,(err)=>{
+        assert.true(err === null || typeof err === "undefined");
+        archive.addFolder(folderPath, (err) => {
+            if (err) {
+                throw err;
+            }
+            assert.true(err === null || typeof err === "undefined");
+            archive.store((err, mapDigest) => {
+                assert.true(err === null || typeof err === "undefined");
+                assert.true(mapDigest !== null && typeof mapDigest !== "undefined");
+                archive.getFolder(savePath, mapDigest, (err) => {
+                    assert.true(err === null || typeof err === "undefined");
+                    // callback();
+                    utils.deleteFolders([folderPath, savePath], (err) => {
                         if (err) {
                             throw err;
-                        }        
-                        assert.true(typeof mapDigest !== "undefined" && mapDigest !== null, "mapDigest is null or undefined");
-                        
-                        archive.getFolder(savePath, mapDigest, (err) => {
-                            if (err) {
-                                throw err;
-                            }
-                            // archive.replaceFile(path.join(path.join(folderPath,'fld2'),'b.txt'),archive.getReadStream('any.txt'),(err)=>{
-                            //     if(err){
-                            //         console.log('ERROR!');
-                            //     }                            
-                            archive.getFile(path.join(path.join(folderPath,'fld2'),'b.txt'),savePath,(err)=>{
-                                if(err)
-                                    throw err;
-                            });
-                            callback();
-                        });
-                        archive.list((err,keys)=>{
-                            if(err)
-                                throw err;
-                            console.log('List is:\n');
-                            keys.forEach(fp=>{
-                                console.log(fp);
-                            });
-                        });
+                        }
+                        // assert.true(err === null || typeof err === "undefined");
+                        callback();
                     });
-                //});
-        });
+                });
+            });
 
+        });
     });
 }, 1500);
+
