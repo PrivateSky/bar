@@ -105,14 +105,100 @@ function deleteFolderRecursively(inputPath, callback) {
     });
 }
 
+function deleteFiles(listFiles, index, callback) {
+    if (index === listFiles.length) {
+        return callback();
+    }
+
+    fs.unlink(listFiles[index], (err) => {
+        if (err) {
+            return callback(err);
+        }
+
+        deleteFiles(listFiles, index + 1, callback);
+    });
+}
+
+function collectFilesAndFolders(folderList = [], fileList = [], folderIndex, callback) {
+    if (folderIndex === folderList.length) {
+        return callback(undefined, folderList, fileList);
+    }
+
+    const folderPath = folderList[folderIndex];
+    fs.readdir(folderPath, (err, files) => {
+        if (err) {
+            return callback(err);
+        }
+
+        files = files.map(file => path.join(folderPath, file));
+        files.forEach((file, i) => {
+            fs.stat(file, (err, stats) => {
+                if (err) {
+                    return callback(err);
+                }
+
+                if (stats.isFile()) {
+                    fileList.push(file);
+                }else{
+                    folderList.push(file);
+                }
+                if (i === files.length - 1) {
+                    collectFilesAndFolders(folderList, fileList, folderIndex + 1, callback);
+                }
+            });
+        });
+
+    });
+}
+
+function __removeFolders(listFolders, index, callback) {
+    if (index === listFolders.length) {
+        return callback();
+    }
+
+    fs.rmdir(listFolders[index], (err) => {
+        if (err) {
+            return callback(err);
+        }
+
+        __removeFolders(listFolders, index + 1, callback);
+    });
+}
+
+
+
+function deleteFolder(folderPath, callback) {
+    collectFilesAndFolders([folderPath], [], 0, (err, listFolders, listFiles) => {
+        if (err) {
+            return callback(err);
+        }
+
+        deleteFiles(listFiles, 0, (err) => {
+            if (err) {
+                return callback(err);
+            }
+            listFolders.sort((a, b) => {
+                const splitA = a.split(path.sep);
+                const splitB = b.split(path.sep);
+                return splitB.length - splitA.length;
+            });
+
+            __removeFolders(listFolders, 0, callback);
+        });
+    });
+}
+
 function deleteFolders(folders, callback){
     const asyncDispatcher = new AsyncDispatcher((errors, results) => {
         callback();
     });
 
+    if (folders.length === 0) {
+        return callback();
+    }
     asyncDispatcher.dispatchEmpty(folders.length);
     folders.forEach(folder => {
-        deleteFolderRecursively(folder, (err) => {
+        deleteFolder(folder, (err) => {
             if (err) {
                 return callback(err);
             }
