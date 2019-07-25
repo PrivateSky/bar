@@ -34,28 +34,15 @@ assert.callback("ArchiveFolderTest", (callback) => {
     utils.ensureFilesExist(folders, files, text,(err)=>{
         assert.true(err === null || typeof err === "undefined");
         archive.addFolder(folderPath, (err, mapDigest) => {
-            if (err) {
-                throw err;
-            }
-            console.log("added folder", mapDigest);
             assert.true(err === null || typeof err === "undefined");
-            // archive.store((err, mapDigest) => {
-            //     assert.true(err === null || typeof err === "undefined");
-                assert.true(mapDigest !== null && typeof mapDigest !== "undefined");
-                archive.getFolder(savePath, mapDigest, (err) => {
-                    console.log("got folder");
+            assert.true(mapDigest !== null && typeof mapDigest !== "undefined");
+            archive.extractFolder(savePath, (err) => {
+                assert.true(err === null || typeof err === "undefined");
+                utils.deleteFolders([folderPath, savePath], (err) => {
                     assert.true(err === null || typeof err === "undefined");
-                    // callback();
-                    utils.deleteFolders([folderPath, savePath], (err) => {
-                        if (err) {
-                            throw err;
-                        }
-                        // assert.true(err === null || typeof err === "undefined");
-                        callback();
-                    });
+                    callback();
                 });
-            // });
-
+            });
         });
     });
 }, 1500);
