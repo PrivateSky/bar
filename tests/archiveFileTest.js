@@ -1,27 +1,47 @@
 const assert = require("double-check").assert;
 const path = require("path");
-const BarWorker = require("../lib/BarWorker");
-const barWorker = new BarWorker();
 
-
+const utils = require("./utils/utils");
 const Archive = require("../lib/Archive");
-const FolderBrickStorage = require("../lib/FolderBrickStorage");
 
-const folderPath = path.resolve("any.txt");
+const filePath = path.resolve("./res/myFile");
+
+const folders = ["res", "dot"];
+const files = ["res/myFile"];
+
+const text = ["Ana are mere."];
 let savePath = "dot";
 
-const archive = new Archive("testArchive", new FolderBrickStorage(savePath), barWorker);
+const createFolderBrickStorage = require("../lib/FolderBrickStorage").createFolderBrickStorage;
+const createFsAdapter = require("../lib/FsBarWorker").createFsBarWorker;
+const ArchiveConfigurator = require("../lib/ArchiveConfigurator");
 
-assert.callback("archiveFileTest", (callback) => {
-    archive.addFolder(folderPath, (err) => {
+ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", createFolderBrickStorage, filePath);
+ArchiveConfigurator.prototype.registerDiskAdapter("fsAdapter", createFsAdapter);
+
+
+const archiveConfigurator = new ArchiveConfigurator();
+archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
+archiveConfigurator.setDiskAdapter("fsAdapter");
+archiveConfigurator.setBufferSize(256);
+
+
+const archive = new Archive(archiveConfigurator);
+assert.callback("ArchiveFileTest", (callback) => {
+    utils.ensureFilesExist(folders, files, text, (err) => {
         assert.true(err === null || typeof err === "undefined");
 
-        archive.store((err, mapDigest) => {
+        archive.addFile(filePath, (err, mapDigest) => {
             assert.true(err === null || typeof err === "undefined");
             assert.true(mapDigest !== null && typeof mapDigest !== "undefined");
-            archive.getFolder(savePath, mapDigest, (err) => {
+
+            archive.getFile(savePath, (err) => {
                 assert.true(err === null || typeof err === "undefined");
-                callback();
+
+                utils.deleteFolders(folders, (err) => {
+                    assert.true(err === null || typeof err === "undefined");
+                    callback();
+                });
             });
         });
     });

@@ -27,17 +27,19 @@ archiveConfigurator.setDiskAdapter("fsAdapter");
 archiveConfigurator.setBufferSize(256);
 
 
-
 const archive = new Archive(archiveConfigurator);
 
 assert.callback("ArchiveFolderTest", (callback) => {
-    utils.ensureFilesExist(folders, files, text,(err)=>{
+    utils.ensureFilesExist(folders, files, text, (err) => {
         assert.true(err === null || typeof err === "undefined");
+
         archive.addFolder(folderPath, (err, mapDigest) => {
             assert.true(err === null || typeof err === "undefined");
             assert.true(mapDigest !== null && typeof mapDigest !== "undefined");
+
             archive.extractFolder(savePath, (err) => {
                 assert.true(err === null || typeof err === "undefined");
+
                 utils.deleteFolders([folderPath, savePath], (err) => {
                     assert.true(err === null || typeof err === "undefined");
                     callback();
