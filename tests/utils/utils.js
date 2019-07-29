@@ -130,6 +130,10 @@ function collectFilesAndFolders(folderList = [], fileList = [], folderIndex, cal
             return callback(err);
         }
 
+        if (files.length === 0) {
+            return collectFilesAndFolders(folderList, fileList, folderIndex + 1, callback);
+        }
+
         files = files.map(file => path.join(folderPath, file));
         files.forEach((file, i) => {
             fs.stat(file, (err, stats) => {
@@ -177,6 +181,7 @@ function deleteFolder(folderPath, callback) {
             if (err) {
                 return callback(err);
             }
+
             listFolders.sort((a, b) => {
                 const splitA = a.split(path.sep);
                 const splitB = b.split(path.sep);
