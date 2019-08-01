@@ -1,7 +1,7 @@
 const assert = require("double-check").assert;
 const CommandHandler = require('../lib/CommandHandler');
 
-let commandLine = [['bar','barx','-cf','name.bar','folderName'],['bar','barx','-x','--file=name.bar'],['bar','barx','-tf','name.bar'],['bar','barx','-czf','name.bar','folderName'],['bar','barx','-cxf','a','b']];
+let commandLine = [['bar','barx','-cf','name.bar','folderName'],['bar','barx','-x','--file=name.bar'],['bar','barx','-tf','name.bar'],['bar','barx','-czf','name.bar','folderName']];
 assert.callback("testCommandLine",(callback)=>{
     let commandHandler = new CommandHandler(commandLine[0]);
     let parameters = commandHandler.getParameters();
@@ -19,9 +19,5 @@ assert.callback("testCommandLine",(callback)=>{
     parameters = commandHandler.getParameters();
     flags = commandHandler.getFlags();
     assert.true(parameters.length === 2 && flags.length === 1 && flags[0].toString() === '-czf' && parameters[0].toString() === 'name.bar' && parameters[1].toString() === 'folderName' && commandHandler.getCommand() ==='czf');
-    commandHandler = new CommandHandler(commandLine[4]);
-    parameters = commandHandler.getParameters();
-    flags = commandHandler.getFlags();
-    assert.true(typeof parameters === "undefined" && typeof flags === "undefined");
     callback();
 },1500);
