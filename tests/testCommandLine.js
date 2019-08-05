@@ -18,6 +18,6 @@ assert.callback("testCommandLine",(callback)=>{
     commandHandler = new CommandHandler(commandLine[3]);
     parameters = commandHandler.getParameters();
     flags = commandHandler.getFlags();
-    assert.true(parameters.length === 2 && flags.length === 1 && flags[0].toString() === '-czf' && parameters[0].toString() === 'name.bar' && parameters[1].toString() === 'folderName' && commandHandler.getCommand() ==='czf');
+     assert.true(parameters.length === 2 && flags.length === 1 && flags[0].toString() === '-czf' && parameters[0].toString() === 'name.bar' && parameters[1].toString() === 'folderName' && commandHandler.getCommand() ==='czf');
     callback();
 },1500);
