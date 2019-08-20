@@ -1,7 +1,7 @@
 
 function util() {
 
-    const SALT_SIZE = 64;
+    const SALT_SIZE = 8;
     this.getSaltSize = function(){
         return SALT_SIZE;
     }
