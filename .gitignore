@@ -1,3 +1,3 @@
 .idea
-.node-modules
-./lib/Poveste.txt
+node_modules/
+lib/Poveste.txt
