@@ -1,11 +1,11 @@
 const fs = require('fs');
-const SALT_SIZE = 8;
+const OFFSET_SIZE = 8;
 
-function getSaltSize() {
-    return SALT_SIZE;
+function getBarMapOffsetSize() {
+    return OFFSET_SIZE;
 }
 
-function ensureFileDoesNotExists(filePath, callback) {
+function ensureFileDoesNotExist(filePath, callback) {
     fs.access(filePath, (err) => {
         if (!err) {
             fs.unlink(filePath, callback);
@@ -15,4 +15,4 @@ function ensureFileDoesNotExists(filePath, callback) {
     });
 }
 
-module.exports = {getSaltSize, ensureFileDoesNotExists};
+module.exports = {getBarMapOffsetSize, ensureFileDoesNotExist};
