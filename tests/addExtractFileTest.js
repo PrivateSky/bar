@@ -13,7 +13,7 @@ const files = [
     "fld/a.txt", "fld/b.txt", "fld/c.txt"
 ];
 
-const text = ["asta e un textasta e un alt text. Ce te asteptai sa fie?. Mai multe text?", "ana are mere", "hahahaha"];
+const text = ["asta e un text", "ana are mere", "hahahaha"];
 
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
 const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
