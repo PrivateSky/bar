@@ -35,29 +35,29 @@ assert.callback("AddFolderExtractFile", (callback) => {
     utils.ensureFilesExist(folders, files, text, (err) => {
         assert.true(err === null || typeof err === "undefined", "Failed to create folder hierarchy.");
 
-            archive.addFolder(folderPath, (err) => {
-                assert.true(err === null || typeof err === "undefined", "Failed to archive file.");
+        archive.addFolder(folderPath, (err) => {
+            assert.true(err === null || typeof err === "undefined", "Failed to archive file.");
 
-                utils.deleteFolders(folders, (err) => {
-                    assert.true(err === null || typeof err === "undefined", "Failed to delete file");
+            utils.deleteFolders(folders, (err) => {
+                assert.true(err === null || typeof err === "undefined", "Failed to delete file");
 
-                    archive.extractFile(filePath, (err) => {
-                        if (err) {
-                            throw err;
-                        }
-                        assert.true(err === null || typeof err === "undefined", "Failed to extract file.");
-                            utils.deleteFolders(folders, (err) => {
-                                assert.true(err === null || typeof err === "undefined", "Failed to delete test folders");
+                archive.extractFile(filePath, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    assert.true(err === null || typeof err === "undefined", "Failed to extract file.");
+                    utils.deleteFolders(folders, (err) => {
+                        assert.true(err === null || typeof err === "undefined", "Failed to delete test folders");
 
-                                fs.unlink(savePath, (err) => {
-                                    assert.true(err === null || typeof err === "undefined", "Failed to delete file " + savePath);
+                        fs.unlink(savePath, (err) => {
+                            assert.true(err === null || typeof err === "undefined", "Failed to delete file " + savePath);
 
-                                    callback();
-                                });
-                            });
+                            callback();
                         });
                     });
                 });
+            });
         });
+    });
 }, 1500);
 

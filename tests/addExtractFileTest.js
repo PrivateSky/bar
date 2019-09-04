@@ -26,7 +26,7 @@ ArchiveConfigurator.prototype.registerFsAdapter("fsAdapter", createFsAdapter);
 const archiveConfigurator = new ArchiveConfigurator();
 archiveConfigurator.setStorageProvider("FileBrickStorage", savePath);
 archiveConfigurator.setFsAdapter("fsAdapter");
-archiveConfigurator.setBufferSize(65535);
+archiveConfigurator.setBufferSize(2);
 
 const archive = new Archive(archiveConfigurator);
 
