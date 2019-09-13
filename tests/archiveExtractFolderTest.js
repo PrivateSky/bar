@@ -25,6 +25,7 @@ const archiveConfigurator = new ArchiveConfigurator();
 archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
 archiveConfigurator.setFsAdapter("fsAdapter");
 archiveConfigurator.setBufferSize(2);
+archiveConfigurator.setEncryptionAlgorithm("aes-256-cbc");
 
 
 const archive = new Archive(archiveConfigurator);
@@ -60,5 +61,5 @@ assert.callback("ArchiveFolderTest", (callback) => {
             });
         });
     });
-}, 1500);
+}, 3000);
 

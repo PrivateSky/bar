@@ -1,10 +1,9 @@
 const assert = require("double-check").assert;
-const path = require("path");
 const utils = require("./utils/utils");
 const Archive = require("../lib/Archive");
 const fs = require("fs");
 
-const filePath = path.resolve("fld/a.txt");
+const filePath = "fld/a.txt";
 let savePath = "dot";
 
 
@@ -27,6 +26,8 @@ const archiveConfigurator = new ArchiveConfigurator();
 archiveConfigurator.setStorageProvider("FileBrickStorage", savePath);
 archiveConfigurator.setFsAdapter("fsAdapter");
 archiveConfigurator.setBufferSize(2);
+archiveConfigurator.setEncryptionAlgorithm("aes-256-gcm");
+archiveConfigurator.setCompressionAlgorithm("gzip");
 
 const archive = new Archive(archiveConfigurator);
 
@@ -49,7 +50,6 @@ assert.callback("AddExtractFileTest", (callback) => {
                         utils.computeFileHash(filePath, (err, decompressedHashes) => {
                             assert.true(err === null || typeof err === "undefined", "Failed to compute folders hashes");
                             assert.true(initialHashes === decompressedHashes, "Files are not identical");
-
                             utils.deleteFolders(folders, (err) => {
                                 assert.true(err === null || typeof err === "undefined", "Failed to delete test folders");
 
@@ -65,5 +65,5 @@ assert.callback("AddExtractFileTest", (callback) => {
             });
         });
     });
-}, 1500);
+}, 2000);
 
