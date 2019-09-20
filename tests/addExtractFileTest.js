@@ -13,6 +13,7 @@ const files = [
 ];
 
 const text = ["asta e un text", "ana are mere", "hahahaha"];
+const encryptionKey = require("crypto").randomBytes(32);
 
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
 const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
@@ -29,7 +30,7 @@ archiveConfigurator.setBufferSize(2);
 archiveConfigurator.setEncryptionAlgorithm("aes-256-gcm");
 archiveConfigurator.setCompressionAlgorithm("gzip");
 
-const archive = new Archive(archiveConfigurator);
+const archive = new Archive(archiveConfigurator, encryptionKey);
 
 assert.callback("AddExtractFileTest", (callback) => {
     utils.ensureFilesExist(folders, files, text, (err) => {

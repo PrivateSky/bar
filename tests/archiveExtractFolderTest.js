@@ -26,9 +26,10 @@ archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
 archiveConfigurator.setFsAdapter("fsAdapter");
 archiveConfigurator.setBufferSize(2);
 archiveConfigurator.setEncryptionAlgorithm("aes-256-cbc");
+archiveConfigurator.setCompressionAlgorithm("gzip");
 
-
-const archive = new Archive(archiveConfigurator);
+const encryptionKey = require("crypto").randomBytes(32);
+const archive = new Archive(archiveConfigurator, encryptionKey);
 
 assert.callback("ArchiveFolderTest", (callback) => {
     utils.ensureFilesExist(folders, files, text, (err) => {
