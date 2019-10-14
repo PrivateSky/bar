@@ -13,11 +13,8 @@ ArchiveConfigurator.prototype.registerFsAdapter("InMemoryFsAdapter", createInMem
 
 
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
-
     const text = Buffer.from("asta e un text");
     let savePath = path.join(testFolder, "dot");
-
-
 
     const archiveConfigurator = new ArchiveConfigurator();
     archiveConfigurator.setStorageProvider("FileBrickStorage", savePath);
@@ -31,11 +28,10 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 
 
     assert.callback("AddExtractDataTest", (callback) => {
-        archive.addFile(text, destPath, (err) => {
+        archive.writeFile(destPath, text, (err) => {
             assert.true(err === null || typeof err === "undefined", "Failed to add data to archive.");
-            let buff = Buffer.alloc(0);
 
-            archive.extractFile(destPath, buff, (err, extractedData) => {
+            archive.readFile(destPath, (err, extractedData) => {
                 assert.true(err === null || typeof err === "undefined", "Failed to add data to archive.");
                 assert.true(text.compare(extractedData) === 0, "Extracted data is not the same as initial data");
 
