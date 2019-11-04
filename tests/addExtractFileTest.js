@@ -26,8 +26,8 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
     const archiveConfigurator = new ArchiveConfigurator();
     archiveConfigurator.setStorageProvider("FileBrickStorage", savePath);
     archiveConfigurator.setFsAdapter("FsAdapter");
+    archiveConfigurator.setEncryptionAlgorithm("aes-256-gcm");
     archiveConfigurator.setBufferSize(2);
-    archiveConfigurator.setMapEncryptionKey(crypto.randomBytes(32));
 
     const archive = new Archive(archiveConfigurator);
 
