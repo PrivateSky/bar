@@ -3,27 +3,28 @@ const assert = double_check.assert;
 const Archive = require("../lib/Archive");
 const ArchiveConfigurator = require("../lib/ArchiveConfigurator");
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
+const createFolderBrickStorage = require("../lib/FolderBrickStorage").createFolderBrickStorage;
 const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
-ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
+ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", createFolderBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
 const fs = require("fs");
 const crypto = require("crypto");
 const path = require("path");
 
-double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
-    const folderPath = path.join(testFolder, "fld");
-    const filePath = path.join(testFolder, "fld/a.txt");
-    let savePath = path.join(testFolder, "dot");
+//double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
+
+    const folderPath =  "fld";
+    let savePath =  "dot";
 
 
-    const folders = ["fld"].map(folder => path.join(testFolder, folder));
-    const files = [path.join('fld','a.txt'), path.join('fld','b.txt'), path.join('fld','c.txt')].map(file => path.join(testFolder, file));
+    const folders = ["fld","dot"];
+    const files = [path.join('fld','a.txt'), path.join('fld','b.txt'), path.join('fld','c.txt')];
 
     const text = ["asta e un text?", "ana are mere", "hahahaha"];
 
     const archiveConfigurator = new ArchiveConfigurator();
-    archiveConfigurator.setStorageProvider("FileBrickStorage", savePath);
+    archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
     archiveConfigurator.setFsAdapter("FsAdapter");
     archiveConfigurator.setBufferSize(3);
     const archive = new Archive(archiveConfigurator);
@@ -35,18 +36,16 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
             archive.addFolder(folderPath, (err) => {
                 assert.true(err === null || typeof err === "undefined", "Failed to archive file.");
 
-                fs.writeFileSync(path.join(testFolder,path.join('fld','d.txt')),'asta este un test de UPDATE!xoxox');
-                console.log(testFolder);
-                archive.update(folders[0],(err,msg)=>{
+                fs.writeFileSync(path.join('fld','d.txt'),'asta este un test de UPDATE!xoxox');
+                archive.update(folderPath,(err)=>{
                     if(err){
                         throw err;
                     }
-                    console.log(msg);
-                    console.log('NothingTOBidon');
+                    console.log('DAN');
                     callback();
                 });
             });
         });
     }, 1500);
-});
+
 
