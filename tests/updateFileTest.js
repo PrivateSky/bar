@@ -10,7 +10,6 @@ ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", crea
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
 const fs = require("fs");
-
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 
     let savePath = path.join(testFolder, "dot");
@@ -24,7 +23,6 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
     const archiveConfigurator = new ArchiveConfigurator();
     archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
     archiveConfigurator.setFsAdapter("FsAdapter");
-    archiveConfigurator.setEncryptionAlgorithm("aes-256-gcm");
     archiveConfigurator.setBufferSize(2);
 
     const archive = new Archive(archiveConfigurator);
@@ -41,15 +39,22 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
                 fs.writeFileSync(path.join(testFolder, 'fld','d.txt'), 'Acesta este un test de UPDATE!');
 
                 archive.update(folders[0], (err, digest) => {
+                    assert.true(err === null || typeof err === "undefined", "Failed to update archive");
+
                     double_check.computeFoldersHashes(folders[0], (err, initialHashes) => {
                         assert.true(err === null || typeof err === "undefined", "Received error");
+
                         double_check.deleteFoldersSync(folders[0]);
-                        archive.extractFolder(folders[1], (err) => {
+
+                        archive.extractFolder((err) => {
+                            if (err) {
+                                throw err;
+                            }
                             assert.true(err === null || typeof err === "undefined", "Failed to extract file.");
 
                             double_check.computeFoldersHashes(folders[0], (err, decompressedHashes) => {
                                 assert.true(err === null || typeof err === "undefined", "Failed to compute folders hashes");
-                                assert.true(initialHashes === decompressedHashes, "Files are not identical");
+                                assert.hashesAreEqual(initialHashes, decompressedHashes, "Folders are not identical");
 
                                 double_check.deleteFoldersSync(folders);
 
