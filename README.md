@@ -52,9 +52,9 @@ A storage provider can be on of these:
  
  SingleFileStorageProvider  : stores bricks in a single file
  
- CacheEDFSStorageProvider: privateSky's EDFS bricks storage provider plus local cache
+ CacheEDFSStorageProvider: privateSky's EDFSClient bricks storage provider plus local cache
  
- EDFSStorageProvider: privateSky's EDFS bricks storage provider
+ EDFSStorageProvider: privateSky's EDFSClient bricks storage provider
 
 # Use bar as a node module to create or update
 ```javascript
