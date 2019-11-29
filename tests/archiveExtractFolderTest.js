@@ -9,7 +9,7 @@ ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
 const crypto = require("crypto");
 const path = require("path");
-
+const testFolder = "./";
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 
     const folderPath = path.join(testFolder, "fld");
@@ -24,8 +24,8 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
     const archiveConfigurator = new ArchiveConfigurator();
     archiveConfigurator.setStorageProvider("FolderBrickStorage", savePath);
     archiveConfigurator.setFsAdapter("FsAdapter");
-    archiveConfigurator.setBufferSize(2);
-    archiveConfigurator.setMapEncryptionKey(crypto.randomBytes(32));
+    archiveConfigurator.setBufferSize(256);
+    // archiveConfigurator.setEncryptionAlgorithm("aes-256-gcm");
 
     const archive = new Archive(archiveConfigurator);
 
@@ -36,10 +36,10 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
             double_check.computeFoldersHashes([folderPath], (err, initialHashes) => {
                 assert.true(err === null || typeof err === "undefined", "Failed to compute folder hashes.");
 
-                archive.addFolder(folderPath, (err, mapDigest) => {
+                archive.addFolder(folderPath, (err, seed) => {
                     assert.true(err === null || typeof err === "undefined", "Failed to add folder.");
-                    assert.true(mapDigest !== null && typeof mapDigest !== "undefined", "Map digest is null or undefined.");
-
+                    // assert.true(mapDigest !== null && typeof mapDigest !== "undefined", "Map digest is null or undefined.");
+                    console.log("seed", seed.toString());
                     double_check.deleteFoldersSync(folderPath);
                     assert.true(err === null || typeof err === "undefined", "Failed to delete folders.");
 
@@ -50,8 +50,8 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
                             assert.true(err === null || typeof err === "undefined", "Failed to compute folder hashes.");
                             assert.true(assert.hashesAreEqual(initialHashes, extractionHashes), "Folder hashes do not coincide.");
 
-                            double_check.deleteFoldersSync([folderPath, savePath]);
-                            assert.true(err === null || typeof err === "undefined", "Failed to delete folders.");
+                            // double_check.deleteFoldersSync([folderPath, savePath]);
+                            // assert.true(err === null || typeof err === "undefined", "Failed to delete folders.");
                             callback();
                         });
                     });

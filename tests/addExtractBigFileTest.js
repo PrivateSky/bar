@@ -1,14 +1,18 @@
+require("../../../psknode/bundles/pskruntime");
+require("../../../psknode/bundles/psknode");
+require("../../../psknode/bundles/consoleTools");
+require("../../../psknode/bundles/edfsBar");
+
 const double_check = require("../../../modules/double-check");
 const assert = double_check.assert;
 const Archive = require("../lib/Archive");
 const ArchiveConfigurator = require("../lib/ArchiveConfigurator");
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
-const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
+const createFsAdapter = require("bar-fs-adapter").createFsAdapter;
 ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
 const fs = require("fs");
-const crypto = require("crypto");
 const path = require("path");
 
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
@@ -30,9 +34,7 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
     archiveConfigurator.setStorageProvider("FileBrickStorage", savePath);
     archiveConfigurator.setFsAdapter("FsAdapter");
     archiveConfigurator.setBufferSize(1000000);
-    archiveConfigurator.setEncryptionAlgorithm("aes-256-gcm");
     archiveConfigurator.setCompressionAlgorithm("gzip");
-    archiveConfigurator.setMapEncryptionKey(crypto.randomBytes(32));
 
     const archive = new Archive(archiveConfigurator);
 
@@ -52,13 +54,9 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
                         double_check.computeFileHash(filePath, (err, decompressedHashes) => {
                             assert.true(err === null || typeof err === "undefined", "Failed to compute folders hashes");
                             assert.true(initialHashes === decompressedHashes, "Files are not identical");
-                            fs.unlink(savePath, (err) => {
-                                assert.true(err === null || typeof err === "undefined", "Failed to delete file " + savePath);
-                                fs.unlink(filePath, (err) => {
-                                    assert.true(err === null || typeof err === "undefined", "Failed to delete file");
-                                    callback();
-                                });
-                            });
+                            fs.unlinkSync(savePath);
+                            fs.unlinkSync(filePath);
+                            callback();
                         });
                     });
                 });

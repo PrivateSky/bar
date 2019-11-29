@@ -1,14 +1,19 @@
+require("../../../psknode/bundles/pskruntime");
+require("../../../psknode/bundles/psknode");
+require("../../../psknode/bundles/consoleTools");
+require("../../../psknode/bundles/edfsBar");
+
 const double_check = require("../../../modules/double-check");
 const assert = double_check.assert;
 const Archive = require("../lib/Archive");
 const ArchiveConfigurator = require("../lib/ArchiveConfigurator");
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
-const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
+const createFsAdapter = require("bar-fs-adapter").createFsAdapter;
 ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
+
 const fs = require("fs");
-const crypto = require("crypto");
 const path = require("path");
 
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {

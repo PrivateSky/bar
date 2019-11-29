@@ -1,3 +1,7 @@
+require("../../../psknode/bundles/pskruntime");
+require("../../../psknode/bundles/psknode");
+require("../../../psknode/bundles/consoleTools");
+require("../../../psknode/bundles/edfsBar");
 const path = require("path");
 
 const double_check = require("../../../modules/double-check");
@@ -5,7 +9,7 @@ const assert = double_check.assert;
 const Archive = require("../lib/Archive");
 const ArchiveConfigurator = require("../lib/ArchiveConfigurator");
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
-const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
+const createFsAdapter = require("bar-fs-adapter").createFsAdapter;
 ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
@@ -16,7 +20,7 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 
     const filePath = path.join(testFolder, "fld/a.txt");
     let savePath = path.join(testFolder, "dot");
-
+    const barPath = savePath;
 
     const folders = ["fld"].map(folder => path.join(testFolder, folder));
     const files = ["fld/a.txt", "fld/b.txt", "fld/c.txt"].map(file => path.join(testFolder, file));
@@ -39,13 +43,13 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
             double_check.computeFileHash(filePath, (err, initialHashes) => {
                 assert.true(err === null || typeof err === "undefined", "Received error");
 
-                archive.addFile(filePath, (err) => {
+                archive.addFile(filePath, barPath, (err) => {
                     assert.true(err === null || typeof err === "undefined", "Failed to archive file.");
 
                     fs.unlink(filePath, (err) => {
                         assert.true(err === null || typeof err === "undefined", "Failed to delete file");
 
-                        archive.extractFile(filePath, (err) => {
+                        archive.extractFile(filePath, barPath, (err) => {
                             assert.true(err === null || typeof err === "undefined", "Failed to extract file.");
 
                             double_check.computeFileHash(filePath, (err, decompressedHashes) => {
@@ -54,11 +58,8 @@ double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 
                                 double_check.deleteFoldersSync(folders);
 
-                                fs.unlink(savePath, (err) => {
-                                    assert.true(err === null || typeof err === "undefined", "Failed to delete file " + savePath);
-
-                                    callback();
-                                });
+                                fs.unlinkSync(savePath);
+                                callback();
                             });
                         });
                     });
