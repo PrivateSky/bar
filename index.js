@@ -24,5 +24,7 @@ module.exports.createBarMap = (header) => {
     const BarMap = require("./lib/FolderBarMap");
     return new BarMap(header);
 };
+
+module.exports.Seed = require('./lib/Seed');
 module.exports.createFolderBrickStorage = createFolderBrickStorage;
 module.exports.createFileBrickStorage = createFileBrickStorage;
