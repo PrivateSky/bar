@@ -11,9 +11,11 @@ const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
 ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
-const fs = require("fs");
+const fsModule = "fs";
+const fs = require(fsModule);
 const crypto = require("crypto");
-const path = require("path");
+const pathModule = "path";
+const path = require(pathModule);
 
 let folderPath;
 let filePath;

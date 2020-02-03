@@ -8,7 +8,8 @@ ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", crea
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
 const crypto = require("crypto");
-const path = require("path");
+const pathModule = "path";
+const path = require(pathModule);
 
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 

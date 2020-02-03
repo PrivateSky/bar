@@ -12,9 +12,10 @@ const createFsAdapter = require("bar-fs-adapter").createFsAdapter;
 ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
-
-const fs = require("fs");
-const path = require("path");
+const fsModule = "fs";
+const fs = require(fsModule);
+const pathModule = "path";
+const path = require(pathModule);
 
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 

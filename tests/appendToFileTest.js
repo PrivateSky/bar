@@ -1,5 +1,6 @@
 const assert = require("double-check").assert;
-const path = require("path");
+const pathModule = "path";
+const path = require(pathModule);
 
 const utils = require("./utils/utils");
 const Archive = require("../lib/Archive");

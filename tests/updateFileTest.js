@@ -1,4 +1,5 @@
-const path = require("path");
+const pathModule = "path";
+const path = require(pathModule);
 
 const double_check = require("../../../modules/double-check");
 const assert = double_check.assert;
@@ -9,7 +10,8 @@ const createFsAdapter = require("../lib/FsAdapter").createFsAdapter;
 ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", createFolderBrickStorage);
 ArchiveConfigurator.prototype.registerFsAdapter("FsAdapter", createFsAdapter);
 
-const fs = require("fs");
+const fsModule = "fs";
+const fs = require(fsModule);
 double_check.createTestFolder("bar_test_folder", (err, testFolder) => {
 
     let savePath = path.join(testFolder, "dot");

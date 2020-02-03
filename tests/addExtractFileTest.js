@@ -2,7 +2,8 @@ require("../../../psknode/bundles/pskruntime");
 require("../../../psknode/bundles/psknode");
 require("../../../psknode/bundles/consoleTools");
 require("../../../psknode/bundles/edfsBar");
-const path = require("path");
+const pathModule = "path";
+const path = require(pathModule);
 
 const double_check = require("../../../modules/double-check");
 const assert = double_check.assert;

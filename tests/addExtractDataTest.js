@@ -1,7 +1,8 @@
 const double_check = require("../../double-check");
 const assert = double_check.assert;
 const Archive = require("../lib/Archive");
-const path = require("path");
+const pathModule = "path";
+const path = require(pathModule);
 const crypto = require("crypto");
 
 const createFileBrickStorage = require("../lib/FileBrickStorage").createFileBrickStorage;
