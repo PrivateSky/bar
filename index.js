@@ -21,7 +21,7 @@ module.exports.createArchiveConfigurator = () => {
 };
 
 module.exports.createBarMap = (header) => {
-    const BarMap = require("./lib/FolderBarMap");
+    const BarMap = require("./lib/BarMap");
     return new BarMap(header);
 };
 
