@@ -25,6 +25,11 @@ module.exports.createBarMap = (header) => {
     return new BarMap(header);
 };
 
+module.exports.isArchive = (archive) => {
+    const Archive = require('./lib/Archive');
+    return archive instanceof Archive;
+}
+
 module.exports.Seed = require('./lib/Seed');
 module.exports.createFolderBrickStorage = createFolderBrickStorage;
 module.exports.createFileBrickStorage = createFileBrickStorage;
