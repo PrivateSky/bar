@@ -31,5 +31,6 @@ module.exports.isArchive = (archive) => {
 }
 
 module.exports.Seed = require('./lib/Seed');
+module.exports.BarMapDiff = require('./lib/BarMapDiff');
 module.exports.createFolderBrickStorage = createFolderBrickStorage;
 module.exports.createFileBrickStorage = createFileBrickStorage;
