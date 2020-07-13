@@ -1,4 +1,3 @@
-const fs = require('fs');
 const OFFSET_SIZE = 8;
 
 function getBarMapOffsetSize() {
@@ -6,6 +5,7 @@ function getBarMapOffsetSize() {
 }
 
 function ensureFileDoesNotExist(filePath, callback) {
+    const fs = require('fs');
     fs.access(filePath, (err) => {
         if (!err) {
             fs.unlink(filePath, callback);
