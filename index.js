@@ -32,5 +32,7 @@ module.exports.isArchive = (archive) => {
 
 module.exports.Seed = require('./lib/Seed');
 module.exports.BarMapDiff = require('./lib/BarMapDiff');
+module.exports.BarMapStrategyFactory = require('./lib/BarMapStrategy').Factory;
+module.exports.BarMapStrategyMixin = require('./lib/BarMapStrategy/BarMapStrategyMixin');
 module.exports.createFolderBrickStorage = createFolderBrickStorage;
 module.exports.createFileBrickStorage = createFileBrickStorage;
