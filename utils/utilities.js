@@ -1,6 +1,6 @@
 const OFFSET_SIZE = 8;
 
-function getBarMapOffsetSize() {
+function getBrickMapOffsetSize() {
     return OFFSET_SIZE;
 }
 
@@ -15,4 +15,4 @@ function ensureFileDoesNotExist(filePath, callback) {
     });
 }
 
-module.exports = {getBarMapOffsetSize, ensureFileDoesNotExist};
+module.exports = {getBrickMapOffsetSize, ensureFileDoesNotExist};

@@ -20,9 +20,9 @@ module.exports.createArchiveConfigurator = () => {
     return new ArchiveConfigurator();
 };
 
-module.exports.createBarMap = (header) => {
-    const BarMap = require("./lib/BarMap");
-    return new BarMap(header);
+module.exports.createBrickMap = (header) => {
+    const BrickMap = require("./lib/BrickMap");
+    return new BrickMap(header);
 };
 
 module.exports.isArchive = (archive) => {
@@ -31,8 +31,8 @@ module.exports.isArchive = (archive) => {
 }
 
 module.exports.Seed = require('./lib/Seed');
-module.exports.BarMapDiff = require('./lib/BarMapDiff');
-module.exports.BarMapStrategyFactory = require('./lib/BarMapStrategy').Factory;
-module.exports.BarMapStrategyMixin = require('./lib/BarMapStrategy/BarMapStrategyMixin');
+module.exports.BrickMapDiff = require('./lib/BrickMapDiff');
+module.exports.BrickMapStrategyFactory = require('./lib/BrickMapStrategy').Factory;
+module.exports.BrickMapStrategyMixin = require('./lib/BrickMapStrategy/BrickMapStrategyMixin');
 module.exports.createFolderBrickStorage = createFolderBrickStorage;
 module.exports.createFileBrickStorage = createFileBrickStorage;
