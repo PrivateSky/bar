@@ -32,7 +32,7 @@ module.exports.isArchive = (archive) => {
 
 module.exports.Seed = require('./lib/Seed');
 module.exports.BrickMapDiff = require('./lib/BrickMapDiff');
-module.exports.BrickMapStrategyFactory = require('./lib/BrickMapStrategy').Factory;
+module.exports.BrickMapStrategyFactory = require('./lib/BrickMapStrategy');
 module.exports.BrickMapStrategyMixin = require('./lib/BrickMapStrategy/BrickMapStrategyMixin');
 module.exports.createFolderBrickStorage = createFolderBrickStorage;
 module.exports.createFileBrickStorage = createFileBrickStorage;
