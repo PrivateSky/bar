@@ -1,3 +1,4 @@
 .idea
 node_modules/
 lib/Poveste.txt
+jsconfig.json
