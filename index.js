@@ -1,7 +1,7 @@
 
 const ArchiveConfigurator = require("./lib/ArchiveConfigurator");
-const createFolderBrickStorage = require("./lib/FolderBrickStorage").createFolderBrickStorage;
-const createFileBrickStorage = require("./lib/FileBrickStorage").createFileBrickStorage;
+const createFolderBrickStorage = require("./lib/obsolete/FolderBrickStorage").createFolderBrickStorage;
+const createFileBrickStorage = require("./lib/obsolete/FileBrickStorage").createFileBrickStorage;
 
 ArchiveConfigurator.prototype.registerStorageProvider("FolderBrickStorage", createFolderBrickStorage);
 ArchiveConfigurator.prototype.registerStorageProvider("FileBrickStorage", createFileBrickStorage);
@@ -30,7 +30,6 @@ module.exports.isArchive = (archive) => {
     return archive instanceof Archive;
 }
 
-/*module.exports.Seed = require('./lib/Seed');*/
 module.exports.BrickMapDiff = require('./lib/BrickMapDiff');
 module.exports.BrickMapStrategyFactory = require('./lib/BrickMapStrategy');
 module.exports.BrickMapStrategyMixin = require('./lib/BrickMapStrategy/BrickMapStrategyMixin');
