@@ -1,6 +1,6 @@
 {
     "name": "bar",
-    "version": "v1.0.2",
+    "version": "v1.0.3",
     "description": "bar files are a replacement for tar, tar.gz, zip file format. We say that is \"Brick based\" because the storage of files in the archive is based on the concept of a \"brick\". A brick is a buffer of limited length (typical less then 100KB). A small file is represented with a brick but a larger file is represented as a set of bricks. The bar archive has a header that keeps the relation between files and bricks. A brick is identified by its hash (SHA2).",
     "dependencies": {},
     "scripts": {
